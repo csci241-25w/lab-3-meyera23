@@ -12,7 +12,11 @@ public class BST {
     /* return true iff Node n is a leaf node. a null node is not considered
      * a leaf. */
     public boolean isLeaf(Node n) {
-        return false; //TODO
+	  if(n != null && n.left == null && n.right == null){
+		return true;
+	  }
+        return false;
+
     }
 
     /** return the number of nodes in the tree */
@@ -24,7 +28,10 @@ public class BST {
      * = 0 if n is null
      * = 1 + number of nodes in left + number of nodes in right */
     private int size(Node n) {
-        return 0; // TODO
+        if(n == null){
+            return 0;
+        } 
+	    return 1 + size(n.left) + size(n.right);
     }
 
 
@@ -33,8 +40,22 @@ public class BST {
         traversal = "";
         inOrder(root);
     }
+    /* recursive definition:
+    *   inOrder(null) = ""
+    *   inOrder(n) = 
+    *        "n.value" +
+    *        inOrder(n.left) if n has a left
+    *        inOrder(n.right) if n has a right */
     private void inOrder(Node n) {
-        // TODO
+        if(n != null){
+            if(n.left != null){
+              inOrder(n.left);  
+            }
+            traversal += n.value;
+            if(n.right != null){
+               inOrder(n.right); 
+            }
+        }
     }
 
 
@@ -43,8 +64,22 @@ public class BST {
         traversal = "";
         preOrder(root);
     }
+    /* recursive definition:
+   *   preOrder(null) = ""
+   *   preOrder(n) = 
+   *        "n.value" +
+   *        preOrder(n.left) if n has a left
+   *        preOrder(n.right) if n has a right */
     private void preOrder(Node n) {
-        // TODO
+        if(n != null){
+            traversal += n.value;
+            if(n.left != null){
+                preOrder(n.left);
+            }
+            if(n.right != null){
+                preOrder(n.right);
+            }
+        }
     }
 
     /** appends the values in the tree to String traversal using a post-order traversal */
@@ -52,8 +87,22 @@ public class BST {
         traversal = "";
         postOrder(root);
     }
+   /* recursive definition:
+   *   postOrder(null) = ""
+   *   postOrder(n) =   
+   *        "n.value" +
+   *        postOrder(n.left) if n has a left
+   *        postOrder(n.right) if n has a right */
     private void postOrder(Node n) {
-        //TODO
+        if(n != null){
+            if(n.left != null){
+              postOrder(n.left);  
+            }
+            if(n.right != null){
+               postOrder(n.right); 
+            }
+            traversal += n.value;
+        }
     }
 
     /** return the height of the tree.
@@ -64,9 +113,18 @@ public class BST {
         return height(root);
     }
 
-    /* return the height of the tree rooted at n */
+    /* return the height of the tree rooted at n 
+        recursive definition:
+    *   height(null) = -1
+    *   height(n) = Math.max(leftHeight, rightHeight) + 1
+     */
     private int height(Node n) {
-        return 0; // TODO
+        if(n == null){
+            return -1;
+        }
+        int leftHeight = height(n.left);
+        int rightHeight = height(n.right);
+        return Math.max(leftHeight, rightHeight) + 1;
     }
 
     /** inner class representing a node in the tree. */
